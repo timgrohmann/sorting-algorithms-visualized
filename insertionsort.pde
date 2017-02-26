@@ -23,11 +23,13 @@ class Insertionsort<T extends Comparable<T>> extends SortingAlg<T>{
       elements[j] = insert;
       currentP++;
       j = currentP;
-      insert = elements[currentP];
+      if (currentP >= count){
+        finished = true;
+      }else{
+        insert = elements[currentP];
+      }
     }
-    if (currentP >= count){
-      finished = true;
-    }
+    
     
     return elements;
   }

@@ -1,5 +1,5 @@
 import processing.sound.*;
-Integer[] toSort = new Integer[5000];
+Integer[] toSort = new Integer[10];
 
 int swapCount = 0;
 
@@ -14,7 +14,7 @@ void setup(){
   }
   
   //Change this line to use another algorithm to sort your data
-  alg = new Quicksort<Integer>(toSort);
+  alg = new Insertionsort<Integer>(toSort);
   
 }
 void draw(){

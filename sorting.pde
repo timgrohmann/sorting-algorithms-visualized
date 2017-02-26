@@ -12,7 +12,10 @@ void setup(){
   for (int i = 0; i < toSort.length; i++){
     toSort[i] = floor(random(0,height));
   }
+  
+  //Change this line to use another algorithm to sort your data
   alg = new Quicksort<Integer>(toSort);
+  
 }
 void draw(){
   background(51);

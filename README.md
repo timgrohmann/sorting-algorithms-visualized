@@ -14,3 +14,5 @@ This package includes an [abstract class](https://github.com/timgrohmann/sorting
 #### Generic
 
 This package uses Java's Generics so it basically works with any class implementing the `Comparable<T>` protocol. 
+
+![screenshot](https://raw.githubusercontent.com/timgrohmann/sorting-algorithms-visualized/master/screenshot.png)

@@ -1,9 +1,9 @@
 import processing.sound.*;
-Float[] toSort = new Float[5000];
+Float[] toSort = new Float[500];
 
 int swapCount = 0;
 int compCount = 0;
-int timeWarp = 5;
+int timeWarp = 1;
 SinOsc sine;
 SortingAlg alg;
 
@@ -26,20 +26,19 @@ void setup(){
   
   //Change this line to use another algorithm to sort your data
   startTime = System.currentTimeMillis();
-  alg = new Quicksort<Float>(toSort);
+  alg = new Mergesort<Float>(toSort);
   //alg.execute();
   //endTime = System.currentTimeMillis();
   //println(endTime-startTime);
   sine = new SinOsc(this);
-  //sine.play();
+  sine.play();
 }
 void draw(){
   background(51);
-  
   for (int timer = 0; timer < timeWarp; timer++){
     alg.executeStep();
   }
-  //sine.freq(alg.freqToPlay()/height * 400 + 100);
+  sine.freq(alg.freqToPlay()/height * 400 + 100);
   
   if(alg.finished){
     noLoop();

@@ -12,7 +12,9 @@ abstract class SortingAlg<T extends Comparable<T>>{
   
   abstract void execute();
   abstract void executeStep();
-  abstract color colorForIndex(int i);
+  color colorForIndex(int i){
+    return color(360);
+  }
   float freqToPlay(){
     //Default implementation, to be overwritten
     return 0f;

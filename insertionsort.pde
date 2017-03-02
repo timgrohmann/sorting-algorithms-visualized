@@ -14,7 +14,22 @@ class Insertionsort<T extends Comparable<T>> extends SortingAlg<T>{
     return color(360);
   }
   
-  T[] executeStep(){
+  void execute() {
+    for (int i = 1; i< count; i++){
+      T sortin = elements[i];
+      int k = i;
+      while (k > 0 && elements[k-1].compareTo(sortin) > 0){
+        compCount++;
+        swapCount++;
+        elements[k] = elements[k-1];
+        k--;
+      }
+      elements[k] = sortin;
+    }
+  }
+  
+  void executeStep(){
+    compCount++;
     if (j>0 && elements[j-1].compareTo(insert) > 0){
       elements[j] = elements[j-1];
       swapCount++;
@@ -24,13 +39,15 @@ class Insertionsort<T extends Comparable<T>> extends SortingAlg<T>{
       currentP++;
       j = currentP;
       if (currentP >= count){
+        j--;
         finished = true;
       }else{
         insert = elements[currentP];
       }
     }
-    
-    
-    return elements;
+   }
+   
+   float freqToPlay(){
+    return (float) elements[j];
   }
 }

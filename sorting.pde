@@ -1,30 +1,51 @@
 import processing.sound.*;
-Integer[] toSort = new Integer[10];
+Float[] toSort = new Float[5000];
 
 int swapCount = 0;
-
-
+int compCount = 0;
+int timeWarp = 5;
+SinOsc sine;
 SortingAlg alg;
+
+long startTime;
+long endTime;
 
 void setup(){
   colorMode(HSB, 360, 100, 100, 100);
   size(1000,600);
+  ArrayList<Float> list = new ArrayList<Float>();
+  for (int i = 1; i < toSort.length+1; i++){
+    list.add((float)i/toSort.length*height);
+  }
+  
   for (int i = 0; i < toSort.length; i++){
-    toSort[i] = floor(random(0,height));
+    int ind = floor(random(0,list.size()));
+    toSort[i] = list.get(ind);
+    list.remove(ind);
   }
   
   //Change this line to use another algorithm to sort your data
-  alg = new Insertionsort<Integer>(toSort);
-  
+  startTime = System.currentTimeMillis();
+  alg = new Quicksort<Float>(toSort);
+  //alg.execute();
+  //endTime = System.currentTimeMillis();
+  //println(endTime-startTime);
+  sine = new SinOsc(this);
+  //sine.play();
 }
 void draw(){
   background(51);
   
-  toSort = (Integer[]) alg.executeStep();
+  for (int timer = 0; timer < timeWarp; timer++){
+    alg.executeStep();
+  }
+  //sine.freq(alg.freqToPlay()/height * 400 + 100);
   
   if(alg.finished){
     noLoop();
-    print("finished");
+    println("finished");
+    
+    sine.stop();
   }
   float w = (float) width / toSort.length;
   if (w<5){
@@ -37,18 +58,23 @@ void draw(){
     float x = w * i;
     float curval = toSort[i];
     fill(alg.colorForIndex(i));
+    noStroke();    
     if (alg.finished) fill(100,10,100);
     rect(x,height-curval,w,curval);
-    fill(0);
-    
-    if (w>10 && false){
-      textAlign(CENTER,BOTTOM);
-      textSize(7);
-      text(toSort[i].toString(), x + w/2, height);
-    }
-    fill(360);
-    textAlign(LEFT,TOP);
-    textSize(15);
-    text("Swaps: " + ((Integer) swapCount).toString(), 0, 0);
   }
+  fill(200);
+  textSize(20);
+  textAlign(LEFT,TOP);
+  text("Swaps: " + ((Integer) swapCount).toString(), 10, 5);
+  text("Comps: " + ((Integer) compCount).toString(), 10, 25);
+  text("Frame: " + ((Integer) frameCount).toString(), 10, 45);
+  text("Warp: " + ((Integer) timeWarp).toString(), 10, 65);
+}
+
+void mouseWheel(MouseEvent event){
+  timeWarp -= event.getCount();
+  if (timeWarp > 500){
+    timeWarp -= event.getCount()*9;
+  }
+  timeWarp = constrain(timeWarp,1,5000);
 }
